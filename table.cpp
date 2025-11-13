@@ -1,4 +1,5 @@
 #include "table.h"
+#include "turn.h"
 #include <iostream>
 
 Table::Table(const sf::Vector2f& tablePosition, const std::string& imageDirectory, const sf::Vector2f& spriteScale, const sf::Vector2f* wallDimensions, const sf::Vector2f* wallPositions, const sf::Vector2f* holePositions)
@@ -49,6 +50,11 @@ Table::Table(const sf::Vector2f& tablePosition, const std::string& imageDirector
 void Table::drawTable(sf::RenderWindow& window)
 {
 	window.draw(_tSprite);
+}
+
+void Table::drawHoveredOverHole(sf::RenderWindow& window, const int& i)
+{
+	window.draw(_holes[i]);
 }
 
 void Table::drawHitboxes(sf::RenderWindow& window)
@@ -215,3 +221,42 @@ sf::Vector2f Table::getPosition()
 {
 	return _tablePosition;
 }
+
+bool Table::set8BallHoleMode(Turn& turn, Player& p1, Player& p2, const int& i, sf::RenderWindow& window, sf::Mouse mouse, sf::Event& event)
+{
+	sf::Vector2f disctanceVector;
+	disctanceVector.x  = _holes[i].getPosition().x - mouse.getPosition(window).x;
+	disctanceVector.y = _holes[i].getPosition().y - mouse.getPosition(window).y;
+	float distance = sqrt(disctanceVector.x * disctanceVector.x + disctanceVector.y * disctanceVector.y);
+
+	if (distance <= _holes[i].getRadius())
+	{
+		_holes[i].setFillColor(sf::Color(0, 255, 0, 128));
+		turn.setHoveredOverHoleID(i);
+		if (event.type == sf::Event::MouseButtonPressed)
+		{
+			if (turn.getCurrentPlayerID() == 1)
+			{
+				std::cout << "Gracz nr. 1 musi trafiæ ósemk¹ do ³uzy " << i << "\n";
+				p1.eightBallHoleID = i;
+				p1.eightBallHoleSet = true;
+				turn.set8BallHoleSetMode(false);
+			}
+			else if (turn.getCurrentPlayerID() == 2)
+			{
+				std::cout << "Gracz nr. 2 musi trafiæ ósemk¹ do ³uzy " << i << "\n";
+				p2.eightBallHoleID = i;
+				p2.eightBallHoleSet = true;
+				turn.set8BallHoleSetMode(false);
+			}
+		}
+		return true;
+	}
+	else
+	{
+		_holes[i].setFillColor(sf::Color(0, 255, 0));
+		turn.setHoveredOverHoleID(-1);
+		return false;
+	}
+}
+

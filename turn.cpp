@@ -11,16 +11,34 @@ Turn::Turn(const Player& p, std::vector<int>& scoredSolids, std::vector<int>& sc
 	_cueBallCollisions = 0;
 	_scoredBallsCounter = 0;
 	_firstBallID = 0;
+	_hoveredOverHoleID = -1;
 	_switchReq = false;
 	_cueBallShot = false;
 	_openTableMode = openTableMode;
-	if ((_p.ballType == 1 && scoredSolids.size() == 7) || (_p.ballType == 2 && scoredStripes.size() == 7))
+	if (openTableMode == true && scoredSolids.size() == 7 && scoredStripes.size() == 7)
 	{
 		_lastBall = true;
+		_8ballHoleSetMode = true;
+		std::cout << "Gracz nr. " << _p.ID << "wybiera ³uzê, do której wbije ósemkê.\n";
+
+	}
+	else if ((_p.ballType == 1 && scoredSolids.size() == 7) || (_p.ballType == 2 && scoredStripes.size() == 7))
+	{
+		_lastBall = true;
+		if (_p.eightBallHoleSet == false)
+		{
+			_8ballHoleSetMode = true;
+			std::cout << "Gracz nr. " << _p.ID << "wybiera ³uzê, do której wbije ósemkê.\n";
+		}
+		else
+		{
+			_8ballHoleSetMode = false;
+		}
 	}
 	else
 	{
 		_lastBall = false;
+		_8ballHoleSetMode = false;
 	}
 	_8BallScored = false;
 }
@@ -32,16 +50,27 @@ Turn::Turn(const Player& p, std::vector<int>& scoredSolids, std::vector<int>& sc
 	_cueBallCollisions = 0;
 	_scoredBallsCounter = 0;
 	_firstBallID = 0;
+	_hoveredOverHoleID = -1;
 	_switchReq = false;
 	_cueBallShot = false;
 	_openTableMode = false;
 	if ((_p.ballType == 1 && scoredSolids.size() == 7) || (_p.ballType == 2 && scoredStripes.size() == 7))
 	{
 		_lastBall = true;
+		if (_p.eightBallHoleSet == false)
+		{
+			_8ballHoleSetMode = true;
+			std::cout << "Gracz nr. " << _p.ID << "wybiera ³uzê, do której wbije ósemkê.\n";
+		}
+		else
+		{
+			_8ballHoleSetMode = false;
+		}
 	}
 	else
 	{
 		_lastBall = false;
+		_8ballHoleSetMode = false;
 	}
 	_8BallScored = false;
 }
@@ -87,6 +116,16 @@ void Turn::firstBallIDSetAndCheck(Ball& ball, CueBall& cueBall, int &win)
 void Turn::setSwitchRequest(bool switchReq)
 {
 	_switchReq = switchReq;
+}
+
+void Turn::set8BallHoleSetMode(bool EightBallHoleSetMode)
+{
+	_8ballHoleSetMode = false;
+}
+
+void Turn::setHoveredOverHoleID(const int& hoveredOverHoleID)
+{
+	_hoveredOverHoleID = hoveredOverHoleID;
 }
 
 void Turn::setTeams(Player& p1, Player& p2, std::vector<int>& scoredSolids, std::vector<int>& scoredStripes, CueBall& cueBall)
@@ -209,6 +248,11 @@ int Turn::getWallCollisionCounter()
 	return _wallCollisionCounter;
 }
 
+int Turn::getHoveredOverHoleID()
+{
+	return _hoveredOverHoleID;
+}
+
 bool Turn::getSwitchReq()
 {
 	return _switchReq;
@@ -232,4 +276,9 @@ bool Turn::isLastBall()
 bool Turn::get8BallScored()
 {
 	return _8BallScored;
+}
+
+bool Turn::get8ballHoleSetMode()
+{
+	return _8ballHoleSetMode;
 }

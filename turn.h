@@ -23,6 +23,10 @@ class Turn
 
 		void setSwitchRequest(bool switchReq);
 
+		void set8BallHoleSetMode(bool EightBallHoleSetMode);
+
+		void setHoveredOverHoleID(const int& hoveredOverHoleID);
+
 		void setTeams(Player& p1, Player& p2, std::vector<int>& scoredSolids, std::vector<int>& scoredStripes, CueBall& cueBall);
 
 		void ballScored(Ball& ball, Player& p1, Player& p2, std::vector<int>& scoredSolids, std::vector<int>& scoredStripes);
@@ -39,6 +43,8 @@ class Turn
 
 		int getWallCollisionCounter();
 
+		int getHoveredOverHoleID();
+
 		bool getSwitchReq();
 
 		bool getCueBallShot();
@@ -49,6 +55,8 @@ class Turn
 
 		bool get8BallScored();
 
+		bool get8ballHoleSetMode();
+
 	protected:
 
 		Player _p;
@@ -56,9 +64,11 @@ class Turn
 		int _cueBallCollisions;
 		int _scoredBallsCounter;
 		int _firstBallID;
+		int _hoveredOverHoleID;
 		bool _openTableMode;
 		bool _switchReq;
 		bool _cueBallShot;
 		bool _lastBall;
 		bool _8BallScored;
+		bool _8ballHoleSetMode;
 };

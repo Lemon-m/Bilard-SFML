@@ -1,6 +1,9 @@
 #pragma once
 
+#include "player.h"
 #include <SFML/Graphics.hpp>
+
+class Turn;
 
 class Table
 {
@@ -8,6 +11,8 @@ public:
 	Table(const sf::Vector2f& tablePosition, const std::string& imageDirectory, const sf::Vector2f& spriteScale, const sf::Vector2f* wallDimensions, const sf::Vector2f* wallPositions, const sf::Vector2f* holePositions);
 
 	void drawTable(sf::RenderWindow& window);
+
+	void drawHoveredOverHole(sf::RenderWindow& window, const int& i);
 
 	void drawHitboxes(sf::RenderWindow& window);
 
@@ -30,6 +35,8 @@ public:
 	sf::Vector2f getHolePosition(const int& i);
 	
 	sf::Vector2f getPosition();
+
+	bool set8BallHoleMode(Turn& turn, Player& p1, Player& p2, const int& i, sf::RenderWindow& window, sf::Mouse mouse, sf::Event& event);
 
 protected:
 	sf::Texture _tTexture;

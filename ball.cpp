@@ -225,7 +225,29 @@ void Ball::handleHoleCollision(Table& table, const int& i, Turn& turn, Player& p
 		}
 		else
 		{
-			turn.eightBallScored();
+			if (turn.getCurrentPlayerID() == 1)
+			{
+				if (p1.eightBallHoleID == i)
+				{
+					turn.eightBallScored();
+				}
+				else
+				{
+					win = 2;
+				}
+			}
+			else if (turn.getCurrentPlayerID() == 2)
+			{
+				if (p2.eightBallHoleID == i)
+				{
+					turn.eightBallScored();
+				}
+				else
+				{
+					win = 1;
+				}
+			}
+			
 		}
 	}
 	else

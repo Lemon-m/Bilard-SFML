@@ -136,22 +136,32 @@ int main()
 				window.close();
 			}
 
-
-
-			if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Key::Space || cueBall.getAiming() == true) && cueBall.getBallInHand() == false && ballsStationary == true && win == 0)
+			if (ballsStationary == true && win == 0)
 			{
-				cueBall.aim(window, event, turn);
-			}
-
-			if (cueBall.getBallInHand() == true && ballsStationary == true)
-			{
-				cueBall.ballInHandMode(window, mouse, table, event);
-				for (int i = 0; i < balls.size(); i++)
+				if (turn.get8ballHoleSetMode() == true)
 				{
-					if (cueBall.checkBallCollision(balls[i]))
+					for (int i = 0; i < table.getHolesSize(); i++)
 					{
-						cueBall.setBallInHand(true);
+						if (table.set8BallHoleMode(turn, p1, p2, i, window, mouse, event) == true)
+						{
+							break;
+						}
 					}
+				}
+				else if (cueBall.getBallInHand() == true)
+				{
+					cueBall.ballInHandMode(window, mouse, table, event);
+					for (int i = 0; i < balls.size(); i++)
+					{
+						if (cueBall.checkBallCollision(balls[i]))
+						{
+							cueBall.setBallInHand(true);
+						}
+					}
+				}
+				else if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Key::Space) || cueBall.getAiming() == true)
+				{
+					cueBall.aim(window, event, turn);
 				}
 			}
 		}
@@ -199,7 +209,7 @@ int main()
 			}
 		}
 
-		if (cueBall.getBallInHand() == false)
+		if (cueBall.getBallInHand() == false && turn.get8ballHoleSetMode() == false)
 		{
 			cueBall.setBallPosition(cueBall.getBallPosition() + cueBall.getVelocity() * dt);
 			cueBall.calculateVelocity(dt);
@@ -379,7 +389,17 @@ int main()
 
 		window.clear();
 		table.drawTable(window);
-		table.drawHitboxes(window);
+		if (turn.get8ballHoleSetMode() == true)
+		{
+			for (int i = 0; i < table.getHolesSize(); i++)
+			{
+				if (turn.getHoveredOverHoleID() == i)
+				{
+					table.drawHoveredOverHole(window, i);
+				}
+			}
+		}
+		//table.drawHitboxes(window);
 		for (int i = 0; i < balls.size();)
 		{
 			if (balls[i].getDeletionReq() == true)
