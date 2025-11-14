@@ -15,33 +15,33 @@ table
 	sf::Vector2f(0.21973192704f, 0.21984435797f), // sprite scale - 1000x565
 	new sf::Vector2f[12] // wall dimensions
 	{
-		sf::Vector2f(371, 17), // top left - light green [0]
-		sf::Vector2f(376, 17), // top right - light green [1]
-		sf::Vector2f(19, 369), // right - light green [2]
-		sf::Vector2f(375, 18), // bottom right - light green [3]
-		sf::Vector2f(371, 18), // bottom left - light green [4]
-		sf::Vector2f(18, 369), // left - light green [5]
-		sf::Vector2f(391, 47), // top left - brown [6]
-		sf::Vector2f(401, 47), // top right - brown [7]
-		sf::Vector2f(46, 406), // right - brown [8]
-		sf::Vector2f(401, 46), // bottom right - brown [9]
-		sf::Vector2f(391, 46), // bottom left - brown [10]
-		sf::Vector2f(47, 406)  // left - brown [11]
+		sf::Vector2f(369, 17), // top left - light green [0]
+		sf::Vector2f(374, 17), // top right - light green [1]
+		sf::Vector2f(19, 364), // right - light green [2]
+		sf::Vector2f(371, 18), // bottom right - light green [3]
+		sf::Vector2f(369, 18), // bottom left - light green [4]
+		sf::Vector2f(18, 362), // left - light green [5]
+		sf::Vector2f(389, 47), // top left - brown [6]
+		sf::Vector2f(397, 47), // top right - brown [7]
+		sf::Vector2f(46, 401), // right - brown [8]
+		sf::Vector2f(399, 46), // bottom right - brown [9]
+		sf::Vector2f(389, 46), // bottom left - brown [10]
+		sf::Vector2f(47, 401)  // left - brown [11]
 	},
 	new sf::Vector2f[12] // wall positions (same wall order as above)
 	{
-		sf::Vector2f(92, 47), // [0]
+		sf::Vector2f(94, 47), // [0]
 		sf::Vector2f(525, 47), // [1]
-		sf::Vector2f(935, 98), // [2]
+		sf::Vector2f(935, 100), // [2]
 		sf::Vector2f(526, 501), // [3]
-		sf::Vector2f(92, 501), // [4]
-		sf::Vector2f(47, 100), // [5]
-		sf::Vector2f(79, 0), // [6]
+		sf::Vector2f(94, 501), // [4]
+		sf::Vector2f(47, 102), // [5]
+		sf::Vector2f(81, 0), // [6]
 		sf::Vector2f(519, 0), // [7]
-		sf::Vector2f(954, 80), // [8]
+		sf::Vector2f(954, 82), // [8]
 		sf::Vector2f(519, 519),  // [9]
-		sf::Vector2f(79, 519), // [10]
-		sf::Vector2f(0, 80) // [11]
+		sf::Vector2f(81, 519), // [10]
+		sf::Vector2f(0, 82) // [11]
 	},
 	new sf::Vector2f[6] // hole positions
 	{
@@ -347,7 +347,7 @@ void PlayState::render(sf::RenderWindow& window)
 			}
 		}
 	}
-	//table.drawHitboxes(window);
+	table.drawHitboxes(window);
 	for (int i = 0; i < balls.size();)
 	{
 		if (balls[i].getDeletionReq() == true)
