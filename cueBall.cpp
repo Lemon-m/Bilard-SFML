@@ -54,9 +54,17 @@ void CueBall::aim(sf::RenderWindow& window, sf::Event& event, Turn& turn)
 	//std::cout << "rotation: " << _rotation << "\n";
 }
 
-void CueBall::ballInHandMode(sf::RenderWindow& window, sf::Mouse mouse, Table& table, sf::Event& event)
+void CueBall::ballInHandMode(sf::RenderWindow& window, sf::Mouse mouse, Table& table, sf::Event& event, const bool& openTable)
 {
-	float x = std::clamp(static_cast<int>(window.mapPixelToCoords(mouse.getPosition(window)).x), static_cast<int>(table.getPosition().x + 65 + ball.getRadius()), static_cast<int>(table.getPosition().x + tableX - 65 - ball.getRadius()));
+	float x;
+	if (openTable == true)
+	{
+		x = std::clamp(static_cast<int>(window.mapPixelToCoords(mouse.getPosition(window)).x), static_cast<int>(table.getPosition().x + 741), static_cast<int>(table.getPosition().x + tableX - 65 - ball.getRadius()));
+	}
+	else
+	{
+		x = std::clamp(static_cast<int>(window.mapPixelToCoords(mouse.getPosition(window)).x), static_cast<int>(table.getPosition().x + 65 + ball.getRadius()), static_cast<int>(table.getPosition().x + tableX - 65 - ball.getRadius()));
+	}
 	float y = std::clamp(static_cast<int>(window.mapPixelToCoords(mouse.getPosition(window)).y), static_cast<int>(table.getPosition().y + 64 + ball.getRadius()), static_cast<int>(table.getPosition().y + tableY - 64 - ball.getRadius()));
 	_ballPosition = sf::Vector2f(x, y);
 

@@ -12,7 +12,7 @@ public:
 
 	void aim(sf::RenderWindow& window, sf::Event& event, Turn& turn);
 
-	void ballInHandMode(sf::RenderWindow& window, sf::Mouse mouse, Table& table, sf::Event& event);
+	void ballInHandMode(sf::RenderWindow& window, sf::Mouse mouse, Table& table, sf::Event& event, const bool& openTable);
 
 	void Shoot();
 

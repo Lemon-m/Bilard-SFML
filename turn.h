@@ -41,6 +41,10 @@ class Turn
 
 		int getScoredBallsCounter();
 
+		int getScoredSolidsCounter();
+
+		int getScoredStripesCounter();
+
 		int getWallCollisionCounter();
 
 		int getHoveredOverHoleID();
@@ -63,6 +67,8 @@ class Turn
 		int _wallCollisionCounter;
 		int _cueBallCollisions;
 		int _scoredBallsCounter;
+		int _scoredSolidsCounter;
+		int _scoredStripesCounter;
 		int _firstBallID;
 		int _hoveredOverHoleID;
 		bool _openTableMode;

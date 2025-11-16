@@ -1,11 +1,15 @@
 #include "mainMenuState.h"
 #include "game.h"
 #include "playState.h"
+#include "tutorialState.h"
 #include "ball.h"
 #include <memory>
 #include <stack>
 
-MainMenuState::MainMenuState(Game& game) : State(game)
+MainMenuState::MainMenuState(Game& game) : State(game),
+_playButton(_game.frutiger, 48, sf::Color::Black, sf::Color(102, 102, 102), sf::Vector2f(600.f, 375.f), "Play"),
+_tutorialButton(_game.frutiger, 48, sf::Color::Black, sf::Color(102, 102, 102), sf::Vector2f(600.f, 450.f), "Tutorial"),
+_quitButton(_game.frutiger, 48, sf::Color::Black, sf::Color(102, 102, 102), sf::Vector2f(600.f, 525.f), "Quit")
 {
 	_bgTexture.loadFromFile("assets/main_menu_bg.png");
 	_bg.setTexture(_bgTexture);
@@ -21,79 +25,36 @@ MainMenuState::MainMenuState(Game& game) : State(game)
 	sf::Vector2f titleCenter(_title.getLocalBounds().width / 2.f, _title.getLocalBounds().height / 2.f);
 	_title.setOrigin(titleCenter);
 	_title.setPosition(sf::Vector2f(600.f, 200.f));
-
-	_playButton.setFont(_game.frutiger);
-	_playButton.setFillColor(sf::Color::Black);
-	_playButton.setCharacterSize(48);
-	_playButton.setString("Play");
-	sf::Vector2f playCenter(_playButton.getLocalBounds().width / 2.f, _playButton.getLocalBounds().height / 2.f);
-	_playButton.setOrigin(playCenter);
-	_playButton.setPosition(sf::Vector2f(600.f, 375.f));
-
-	_tutorialButton.setFont(_game.frutiger);
-	_tutorialButton.setFillColor(sf::Color::Black);
-	_tutorialButton.setCharacterSize(48);
-	_tutorialButton.setString("Tutorial");
-	sf::Vector2f tutorialCenter(_tutorialButton.getLocalBounds().width / 2.f, _tutorialButton.getLocalBounds().height / 2.f);
-	_tutorialButton.setOrigin(tutorialCenter);
-	_tutorialButton.setPosition(sf::Vector2f(600.f, 450.f));
-
-	_quitButton.setFont(_game.frutiger);
-	_quitButton.setFillColor(sf::Color::Black);
-	_quitButton.setCharacterSize(48);
-	_quitButton.setString("Quit");
-	sf::Vector2f quitCenter(_quitButton.getLocalBounds().width / 2.f, _quitButton.getLocalBounds().height / 2.f);
-	_quitButton.setOrigin(quitCenter);
-	_quitButton.setPosition(sf::Vector2f(600.f, 525.f));
 }
 
 void MainMenuState::handleEvent(sf::Event& event)
 {
-	float mouseX = _game.window.mapPixelToCoords(sf::Mouse::getPosition(_game.window)).x;
-	float mouseY = _game.window.mapPixelToCoords(sf::Mouse::getPosition(_game.window)).y;
-
-	if (_playButton.getGlobalBounds().contains(mouseX, mouseY))
+	if (_playButton.isMouseOver(_game.window))
 	{
-		_playButton.setFillColor(sf::Color(102, 102, 102));
 		if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
 		{
 			_game.changeState(std::make_unique<PlayState>(_game));
 			return;
 		}
 	}
-	else
-	{
-		_playButton.setFillColor(sf::Color::Black);
-	}
 
-	if (_tutorialButton.getGlobalBounds().contains(mouseX, mouseY))
+	if (_tutorialButton.isMouseOver(_game.window))
 	{
-		_tutorialButton.setFillColor(sf::Color(102, 102, 102));
 		if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
 		{
-			//_game.changeState(std::make_unique<TutorialState>(_game));
+			_game.changeState(std::make_unique<TutorialState>(_game));
 			return;
 		}
 	}
-	else
-	{
-		_tutorialButton.setFillColor(sf::Color::Black);
-	}
 
-	if (_quitButton.getGlobalBounds().contains(mouseX, mouseY))
+	if (_quitButton.isMouseOver(_game.window))
 	{
-		_quitButton.setFillColor(sf::Color(102, 102, 102));
 		if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
 		{
 			_game.window.close();
 			return;
 		}
 	}
-	else
-	{
-		_quitButton.setFillColor(sf::Color::Black);
-	}
-		
 }
 
 void MainMenuState::update(float dt)
@@ -104,7 +65,7 @@ void MainMenuState::render(sf::RenderWindow& window)
 {
 	window.draw(_bg);
 	window.draw(_title);
-	window.draw(_playButton);
-	window.draw(_tutorialButton);
-	window.draw(_quitButton);
+	_playButton.draw(window);
+	_tutorialButton.draw(window);
+	_quitButton.draw(window);
 }

@@ -95,7 +95,7 @@ void PlayState::handleEvent(sf::Event& event)
 		}
 		else if (cueBall.getBallInHand() == true)
 		{
-			cueBall.ballInHandMode(_game.window, _game.mouse, table, event);
+			cueBall.ballInHandMode(_game.window, _game.mouse, table, event, turn.getOpenTableMode());
 			for (int i = 0; i < balls.size(); i++)
 			{
 				if (cueBall.checkBallCollision(balls[i]))
@@ -256,7 +256,7 @@ void PlayState::update(float dt)
 			turn.setSwitchRequest(true);
 		}
 
-		if ((scoredSolids.size() != scoredStripes.size()) && turn.getOpenTableMode() == true)
+		if (((turn.getScoredSolidsCounter() != 0 && turn.getScoredStripesCounter() == 0) || (turn.getScoredStripesCounter() != 0 && turn.getScoredSolidsCounter() == 0)) && turn.getOpenTableMode() == true)
 		{
 			turn.setTeams(p1, p2, scoredSolids, scoredStripes, cueBall);
 		}

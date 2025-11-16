@@ -9,6 +9,8 @@ Turn::Turn(const Player& p, std::vector<int>& scoredSolids, std::vector<int>& sc
 	_wallCollisionCounter = 0;
 	_cueBallCollisions = 0;
 	_scoredBallsCounter = 0;
+	_scoredSolidsCounter = 0;
+	_scoredStripesCounter = 0;
 	_firstBallID = 0;
 	_hoveredOverHoleID = -1;
 	_switchReq = false;
@@ -47,6 +49,8 @@ Turn::Turn(const Player& p, std::vector<int>& scoredSolids, std::vector<int>& sc
 	_wallCollisionCounter = 0;
 	_cueBallCollisions = 0;
 	_scoredBallsCounter = 0;
+	_scoredSolidsCounter = 0;
+	_scoredStripesCounter = 0;
 	_firstBallID = 0;
 	_hoveredOverHoleID = -1;
 	_switchReq = false;
@@ -128,7 +132,7 @@ void Turn::setHoveredOverHoleID(const int& hoveredOverHoleID)
 
 void Turn::setTeams(Player& p1, Player& p2, std::vector<int>& scoredSolids, std::vector<int>& scoredStripes, CueBall& cueBall)
 {
-	if (scoredSolids.size() > scoredStripes.size())
+	if (_scoredSolidsCounter != 0 && _scoredStripesCounter == 0)
 	{
 		if (_p.ID == p1.ID)
 		{
@@ -148,7 +152,7 @@ void Turn::setTeams(Player& p1, Player& p2, std::vector<int>& scoredSolids, std:
 		_p.score = scoredSolids.size();
 		_scoredBallsCounter = scoredSolids.size();
 	}
-	else if (scoredSolids.size() < scoredStripes.size())
+	else if (_scoredStripesCounter != 0 && _scoredSolidsCounter == 0)
 	{
 		if (_p.ID == p1.ID)
 		{
@@ -183,6 +187,7 @@ void Turn::ballScored(Ball& ball, Player& p1, Player& p2, std::vector<int>& scor
 	if (solids.count(ball.getID()))
 	{
 		scoredSolids.push_back(ball.getID());
+		_scoredSolidsCounter++;
 		if (p1.ballType == 1)
 		{
 			p1.score++;
@@ -200,6 +205,7 @@ void Turn::ballScored(Ball& ball, Player& p1, Player& p2, std::vector<int>& scor
 	else if (stripes.count(ball.getID()))
 	{
 		scoredStripes.push_back(ball.getID());
+		_scoredStripesCounter++;
 		if (p1.ballType == 2)
 		{
 			p1.score++;
@@ -239,6 +245,16 @@ int Turn::getCurrentPlayerID()
 int Turn::getScoredBallsCounter()
 {
 	return _scoredBallsCounter;
+}
+
+int Turn::getScoredSolidsCounter()
+{
+	return _scoredSolidsCounter;
+}
+
+int Turn::getScoredStripesCounter()
+{
+	return _scoredStripesCounter;
 }
 
 int Turn::getWallCollisionCounter()

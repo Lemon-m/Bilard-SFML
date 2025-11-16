@@ -2,6 +2,7 @@
 #include "state.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
+#include "textLabel.h"
 
 class PlayState;
 
@@ -21,11 +22,11 @@ class MainMenuState : public State
 
 		sf::Text _title;
 
-		sf::Text _playButton;
+		TextLabel _playButton;
 
-		sf::Text _tutorialButton;
+		TextLabel _tutorialButton;
 
-		sf::Text _quitButton;
+		TextLabel _quitButton;
 
 		sf::Texture _bgTexture;
 
