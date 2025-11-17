@@ -143,7 +143,7 @@ void PlayState::handleEvent(sf::Event& event)
 
 	if (backPopUpActive == false && winPopUpActive == false)
 	{
-		if (resetBtn.isMouseOver(_game.window) == true && event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
+		if (resetBtn.isMouseOver(_game.window) == true && event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left && gameEnded == true)
 		{
 			_game.changeState(std::make_unique<PlayState>(_game));
 			return;
@@ -594,8 +594,8 @@ void PlayState::render(sf::RenderWindow& window)
 	}
 	if (p2MarkerActive == true)
 	{
-		p1Marker.draw(window);
-		window.draw(p1MarkerArrow);
+		p2Marker.draw(window);
+		window.draw(p2MarkerArrow);
 	}
 	if (win != 0)
 	{

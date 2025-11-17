@@ -234,7 +234,7 @@ bool Table::set8BallHoleMode(Turn& turn, Player& p1, Player& p2, const int& i, T
 	{
 		_holes[i].setFillColor(sf::Color(0, 255, 0, 128));
 		turn.setHoveredOverHoleID(i);
-		if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+		if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
 		{
 			if (turn.getCurrentPlayerID() == 1)
 			{
@@ -243,20 +243,28 @@ bool Table::set8BallHoleMode(Turn& turn, Player& p1, Player& p2, const int& i, T
 				p1.eightBallHoleSet = true;
 				turn.set8BallHoleSetMode(false);
 
-				switch (i)
+				if (p2MarkerActive == true && p2.eightBallHoleID == i)
 				{
-					case 0: case 1: case 2:
-						p1MarkerArrow.setRotation(180);
-						p1MarkerArrow.setPosition(_holes[i].getPosition().x, _holes[i].getPosition().y - 40.f);
-						break;
-					case 3: case 4: case 5:
-						p1MarkerArrow.setPosition(_holes[i].getPosition().x, _holes[i].getPosition().y + 40.f);
-						break;
-					default:
-						break;
+					p2Marker.changeText("P1, P2");
 				}
-
-				p1MarkerActive = true;
+				else
+				{
+					switch (i)
+					{
+						case 0: case 1: case 2:
+							p1MarkerArrow.setRotation(180);
+							p1MarkerArrow.setPosition(_holes[i].getPosition().x, _holes[i].getPosition().y - 40.f);
+							p1Marker.text.setPosition(_holes[i].getPosition().x - 1.f, _holes[i].getPosition().y - 50.f);
+							break;
+						case 3: case 4: case 5:
+							p1MarkerArrow.setPosition(_holes[i].getPosition().x, _holes[i].getPosition().y + 40.f);
+							p1Marker.text.setPosition(_holes[i].getPosition().x - 1.f, _holes[i].getPosition().y + 50.f);
+							break;
+						default:
+							break;
+					}
+					p1MarkerActive = true;
+				}
 			}
 			else if (turn.getCurrentPlayerID() == 2)
 			{
@@ -265,20 +273,28 @@ bool Table::set8BallHoleMode(Turn& turn, Player& p1, Player& p2, const int& i, T
 				p2.eightBallHoleSet = true;
 				turn.set8BallHoleSetMode(false);
 
-				switch (i)
+				if (p1MarkerActive == true && p1.eightBallHoleID == i)
 				{
-					case 0: case 1: case 2:
-						p2MarkerArrow.setRotation(180);
-						p2MarkerArrow.setPosition(_holes[i].getPosition().x, _holes[i].getPosition().y - 40.f);
-						break;
-					case 3: case 4: case 5:
-						p2MarkerArrow.setPosition(_holes[i].getPosition().x, _holes[i].getPosition().y + 40.f);
-						break;
-					default:
-						break;
+					p1Marker.changeText("P1, P2");
 				}
-
-				p2MarkerActive = true;
+				else
+				{
+					switch (i)
+					{
+						case 0: case 1: case 2:
+							p2MarkerArrow.setRotation(180);
+							p2MarkerArrow.setPosition(_holes[i].getPosition().x, _holes[i].getPosition().y - 40.f);
+							p2Marker.text.setPosition(_holes[i].getPosition().x - 1.f, _holes[i].getPosition().y - 50.f);
+							break;
+						case 3: case 4: case 5:
+							p2MarkerArrow.setPosition(_holes[i].getPosition().x, _holes[i].getPosition().y + 40.f);
+							p2Marker.text.setPosition(_holes[i].getPosition().x - 1.f, _holes[i].getPosition().y + 50.f);
+							break;
+						default:
+							break;
+					}
+					p2MarkerActive = true;
+				}
 			}
 		}
 		return true;
