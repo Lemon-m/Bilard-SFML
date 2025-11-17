@@ -1,5 +1,6 @@
 #include "table.h"
 #include "turn.h"
+#include "textLabel.h"
 #include <iostream>
 
 Table::Table(const sf::Vector2f& tablePosition, const std::string& imageDirectory, const sf::Vector2f& spriteScale, const sf::Vector2f* wallDimensions, const sf::Vector2f* wallPositions, const sf::Vector2f* holePositions)
@@ -222,7 +223,7 @@ sf::Vector2f Table::getPosition()
 	return _tablePosition;
 }
 
-bool Table::set8BallHoleMode(Turn& turn, Player& p1, Player& p2, const int& i, sf::RenderWindow& window, sf::Mouse mouse, sf::Event& event)
+bool Table::set8BallHoleMode(Turn& turn, Player& p1, Player& p2, const int& i, TextLabel& p1Marker, TextLabel& p2Marker, sf::CircleShape& p1MarkerArrow, sf::CircleShape& p2MarkerArrow, bool& p1MarkerActive, bool& p2MarkerActive, sf::RenderWindow& window, sf::Mouse mouse, sf::Event& event)
 {
 	sf::Vector2f disctanceVector;
 	disctanceVector.x  = _holes[i].getPosition().x - window.mapPixelToCoords(mouse.getPosition(window)).x;
@@ -241,6 +242,21 @@ bool Table::set8BallHoleMode(Turn& turn, Player& p1, Player& p2, const int& i, s
 				p1.eightBallHoleID = i;
 				p1.eightBallHoleSet = true;
 				turn.set8BallHoleSetMode(false);
+
+				switch (i)
+				{
+					case 0: case 1: case 2:
+						p1MarkerArrow.setRotation(180);
+						p1MarkerArrow.setPosition(_holes[i].getPosition().x, _holes[i].getPosition().y - 40.f);
+						break;
+					case 3: case 4: case 5:
+						p1MarkerArrow.setPosition(_holes[i].getPosition().x, _holes[i].getPosition().y + 40.f);
+						break;
+					default:
+						break;
+				}
+
+				p1MarkerActive = true;
 			}
 			else if (turn.getCurrentPlayerID() == 2)
 			{
@@ -248,6 +264,21 @@ bool Table::set8BallHoleMode(Turn& turn, Player& p1, Player& p2, const int& i, s
 				p2.eightBallHoleID = i;
 				p2.eightBallHoleSet = true;
 				turn.set8BallHoleSetMode(false);
+
+				switch (i)
+				{
+					case 0: case 1: case 2:
+						p2MarkerArrow.setRotation(180);
+						p2MarkerArrow.setPosition(_holes[i].getPosition().x, _holes[i].getPosition().y - 40.f);
+						break;
+					case 3: case 4: case 5:
+						p2MarkerArrow.setPosition(_holes[i].getPosition().x, _holes[i].getPosition().y + 40.f);
+						break;
+					default:
+						break;
+				}
+
+				p2MarkerActive = true;
 			}
 		}
 		return true;

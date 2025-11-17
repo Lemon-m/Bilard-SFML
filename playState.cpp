@@ -13,13 +13,15 @@ player1Text(_game.frutiger, 42, sf::Color::White, sf::Vector2f(180.f, 760.f), "P
 player1Type(_game.frutiger, 28, sf::Color::White, sf::Vector2f(180.f, 800.f), ""),
 player2Text(_game.frutiger, 42, sf::Color::White, sf::Vector2f(1005.f, 760.f), "Player 2"),
 player2Type(_game.frutiger, 28, sf::Color::White, sf::Vector2f(1005.f, 800.f), ""),
+p1Marker(_game.frutiger, 18, sf::Color::White, sf::Vector2f(20.f, 20.f), "P1"),
+p2Marker(_game.frutiger, 18, sf::Color::White, sf::Vector2f(20.f, 20.f), "P2"),
 backPopUpYes(_game.frutiger, 56, sf::Color(31, 224, 69), sf::Color(85, 219, 117), sf::Vector2f(470.f, 555.f), "Yes"),
 backPopUpNo(_game.frutiger, 56, sf::Color(255, 42, 74), sf::Color(255, 71, 101), sf::Vector2f(730.f, 555.f), "No"),
 backPopUp(_game.frutiger, "Are you sure you want to return\n           to the main menu?\n    (current game will be reset)", 38),
 winPopUp(_game.frutiger, "placeholder", 42),
 winPopUpReset(_game.frutiger, 56, sf::Color(28, 101, 255), sf::Color(98, 148, 255), sf::Vector2f(600.f, 555.f), "Reset"),
 resetBtn(_game.frutiger, 42, sf::Color(80, 133, 255), sf::Color(117, 160, 255), sf::Vector2f(600.f, 860.f), "Reset"),
-turn(p1, scoredSolids, scoredStripes, true), 
+turn(p1, scoredSolids, scoredStripes, true),
 cueBall(20, sf::Vector2f(840, 450), _game.ballTextures[15]),
 table
 (
@@ -73,6 +75,8 @@ table
 	ballsStationary = true;
 	backPopUpActive = false;
 	winPopUpActive = false;
+	p1MarkerActive = false;
+	p2MarkerActive = false;
 
 	bgTexture.loadFromFile("assets/pool_bg.png");
 	bg.setTexture(bgTexture);
@@ -86,6 +90,17 @@ table
 
 	p1FirstUIBallPos = sf::Vector2f(120.f, 835.f);
 	p2FirstUIBallPos = sf::Vector2f(1045.f, 835.f);
+
+	p1MarkerArrow.setPointCount(3);
+	p1MarkerArrow.setRadius(10);
+	p1MarkerArrow.setOrigin(p1MarkerArrow.getRadius(), p1MarkerArrow.getRadius());
+	p1MarkerArrow.setFillColor(sf::Color::White);
+
+	p2MarkerArrow.setPointCount(3);
+	p2MarkerArrow.setRadius(10);
+	p2MarkerArrow.setOrigin(p2MarkerArrow.getRadius(), p2MarkerArrow.getRadius());
+	p2MarkerArrow.setFillColor(sf::Color::White);
+
 
 	balls.emplace_back(20, sf::Vector2f(420, 450), _game.ballTextures[0]);
 	balls.emplace_back(20, sf::Vector2f(350, 410), _game.ballTextures[1]);
@@ -102,6 +117,12 @@ table
 	balls.emplace_back(20, sf::Vector2f(280, 450), _game.ballTextures[12]);
 	balls.emplace_back(20, sf::Vector2f(315, 470), _game.ballTextures[13]);
 	balls.emplace_back(20, sf::Vector2f(280, 410), _game.ballTextures[14]);
+
+	// for testing vvv
+	//p1.ballType = 1;
+	//p2.ballType = 2;
+	//turn = Turn(p1, scoredSolids, scoredStripes);
+	//turn.set8BallHoleSetMode(true);
 }
 
 void PlayState::handleEvent(sf::Event& event)
@@ -134,7 +155,7 @@ void PlayState::handleEvent(sf::Event& event)
 			{
 				for (int i = 0; i < table.getHolesSize(); i++)
 				{
-					if (table.set8BallHoleMode(turn, p1, p2, i, _game.window, _game.mouse, event) == true)
+					if (table.set8BallHoleMode(turn, p1, p2, i, p1Marker, p2Marker, p1MarkerArrow, p2MarkerArrow, p1MarkerActive, p2MarkerActive, _game.window, _game.mouse, event) == true)
 					{
 						break;
 					}
@@ -516,6 +537,7 @@ void PlayState::update(float dt)
 				}
 			}
 		}
+		//turn.set8BallHoleSetMode(true);
 	}
 }
 
@@ -564,6 +586,16 @@ void PlayState::render(sf::RenderWindow& window)
 		{
 			window.draw(scoredStripesUI[i]);
 		}
+	}
+	if (p1MarkerActive == true)
+	{
+		p1Marker.draw(window);
+		window.draw(p1MarkerArrow);
+	}
+	if (p2MarkerActive == true)
+	{
+		p1Marker.draw(window);
+		window.draw(p1MarkerArrow);
 	}
 	if (win != 0)
 	{

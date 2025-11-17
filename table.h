@@ -3,6 +3,8 @@
 #include "player.h"
 #include <SFML/Graphics.hpp>
 
+struct TextLabel;
+
 class Turn;
 
 class Table
@@ -36,7 +38,7 @@ public:
 	
 	sf::Vector2f getPosition();
 
-	bool set8BallHoleMode(Turn& turn, Player& p1, Player& p2, const int& i, sf::RenderWindow& window, sf::Mouse mouse, sf::Event& event);
+	bool set8BallHoleMode(Turn& turn, Player& p1, Player& p2, const int& i, TextLabel& p1Marker, TextLabel& p2Marker, sf::CircleShape& p1MarkerArrow, sf::CircleShape& p2MarkerArrow, bool& p1MarkerActive, bool& p2MarkerActive, sf::RenderWindow& window, sf::Mouse mouse, sf::Event& event);
 
 protected:
 	sf::Texture _tTexture;
