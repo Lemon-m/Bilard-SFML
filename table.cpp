@@ -254,7 +254,7 @@ bool Table::set8BallHoleMode(Turn& turn, Player& p1, Player& p2, const int& i, T
 						case 0: case 1: case 2:
 							p1MarkerArrow.setRotation(180);
 							p1MarkerArrow.setPosition(_holes[i].getPosition().x, _holes[i].getPosition().y - 40.f);
-							p1Marker.text.setPosition(_holes[i].getPosition().x - 1.f, _holes[i].getPosition().y - 50.f);
+							p1Marker.text.setPosition(_holes[i].getPosition().x - 1.f, _holes[i].getPosition().y - 60.f);
 							break;
 						case 3: case 4: case 5:
 							p1MarkerArrow.setPosition(_holes[i].getPosition().x, _holes[i].getPosition().y + 40.f);
@@ -284,7 +284,7 @@ bool Table::set8BallHoleMode(Turn& turn, Player& p1, Player& p2, const int& i, T
 						case 0: case 1: case 2:
 							p2MarkerArrow.setRotation(180);
 							p2MarkerArrow.setPosition(_holes[i].getPosition().x, _holes[i].getPosition().y - 40.f);
-							p2Marker.text.setPosition(_holes[i].getPosition().x - 1.f, _holes[i].getPosition().y - 50.f);
+							p2Marker.text.setPosition(_holes[i].getPosition().x - 1.f, _holes[i].getPosition().y - 60.f);
 							break;
 						case 3: case 4: case 5:
 							p2MarkerArrow.setPosition(_holes[i].getPosition().x, _holes[i].getPosition().y + 40.f);
