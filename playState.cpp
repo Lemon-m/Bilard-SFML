@@ -544,7 +544,6 @@ void PlayState::update(float dt)
 void PlayState::render(sf::RenderWindow& window)
 {
 	window.draw(bg);
-	window.draw(backBtn);
 	table.drawTable(window);
 	if (turn.get8ballHoleSetMode() == true)
 	{
@@ -569,7 +568,6 @@ void PlayState::render(sf::RenderWindow& window)
 			i++;
 		}
 	}
-	cueBall.drawBall(window);
 	turnText.draw(window);
 	preShotText.draw(window);
 	player1Text.draw(window);
@@ -601,6 +599,8 @@ void PlayState::render(sf::RenderWindow& window)
 	{
 		resetBtn.draw(window);
 	}
+	cueBall.drawBall(window);
+	window.draw(backBtn);
 	if (backPopUpActive == true)
 	{
 		backPopUp.draw(window);
