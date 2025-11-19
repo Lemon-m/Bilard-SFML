@@ -20,6 +20,11 @@
 - Sound effects vary depending on collision force.
 - Physics include collisions, friction, and cue ball-in-hand placement.
 
+## ⚠️ Known Issues
+
+- Collision sounds during the bool preak in the beginning, because of multiple collision sounds being played at once
+- Multiple collision sounds sometimes playing during one collision resulting in a really loud collision sound.
+
 ## ✅ Requirements
 - C++17
 - SFML 2.5.1 (see setup instructions below)  
