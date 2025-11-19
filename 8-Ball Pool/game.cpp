@@ -1,7 +1,13 @@
 #include "game.h"
+#include <iostream>
 
 Game::Game() : window(sf::VideoMode(1920, 1080), "8-Ball Pool", sf::Style::Fullscreen), view(sf::FloatRect(0, 0, 1200.f, 900.f))
 {
+	if (icon.loadFromFile("assets/ball_8.png"))
+	{
+		window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+	}
+
 	isFullscreen = true;
 	ballRotationOn = true;
 
@@ -70,10 +76,12 @@ void Game::createWindow()
 	if (isFullscreen)
 	{
 		window.create(sf::VideoMode::getDesktopMode(), "8-Ball Pool", sf::Style::Fullscreen);
+		window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 	}
 	else
 	{
 		window.create(sf::VideoMode(1200, 900), "8-Ball Pool", sf::Style::Titlebar | sf::Style::Close);
+		window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 	}
 
 	view = sf::View(sf::FloatRect(0, 0, 1200.f, 900.f));

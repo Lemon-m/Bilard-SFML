@@ -41,8 +41,6 @@ build/
 cmake-build-*/
 
 .vs/
-*.vcxproj*
-*.sln
 *.user
 *.pdb
 *.ipch

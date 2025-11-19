@@ -50,6 +50,7 @@ class Game
 	private:
 
 		std::stack<std::unique_ptr<State>> states;
+		sf::Image icon;
 		int volume;
 		bool isFullscreen;
 		bool ballRotationOn;
