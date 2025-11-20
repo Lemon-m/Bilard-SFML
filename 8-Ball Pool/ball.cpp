@@ -239,22 +239,24 @@ void Ball::handleBallCollision(Ball& cBall)
 	float collisionNormalY = posDiff.y / posDiffLength;
 	sf::Vector2f collisionNormal = { collisionNormalX, collisionNormalY };
 
-	sf::Vector2f velDiff = _velocity - cBall.getVelocity();
+	sf::Vector2f velDiff = cBall.getVelocity() - _velocity;
 
 	float velNormalScalar = velDiff.x * collisionNormalX + velDiff.y * collisionNormalY;
 
-	_velocity -= velNormalScalar * collisionNormal;
-	_velocity *= 0.98f;
-
-	cBall.setVelocity(cBall.getVelocity() + velNormalScalar * collisionNormal);
-	cBall.setVelocity(cBall.getVelocity() * 0.98f);
+	if (velNormalScalar < -0.0001f)
+	{
+		_velocity += velNormalScalar * collisionNormal;
+		_velocity *= 0.98f;
+		cBall.setVelocity(cBall.getVelocity() - velNormalScalar * collisionNormal);
+		cBall.setVelocity(cBall.getVelocity() * 0.98f);
+	}
 
 	float overlap = (ball.getRadius() + cBall.ball.getRadius()) - posDiffLength;
 	if (overlap > 0.f)
 	{
 		sf::Vector2f correction = collisionNormal * overlap;
-		_ballPosition -= correction;
-		cBall.setBallPosition(cBall.getBallPosition() + correction * 0.01f);
+		_ballPosition -= correction * 0.5f;
+		cBall.setBallPosition(cBall.getBallPosition() + correction * 0.5f);
 	}
 }
 

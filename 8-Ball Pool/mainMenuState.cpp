@@ -52,7 +52,14 @@ _creditLabel(_game.frutiger, 18, sf::Color::Black, sf::Vector2f(1045.f, 868.75f)
 	_switchOnTexture.loadFromFile("assets/SwitchOn.png");
 	_switchOffTexture.loadFromFile("assets/SwitchOff.png");
 
-	_switch.setTexture(_switchOnTexture);
+	if (_game.isBallRotationOn() == true)
+	{
+		_switch.setTexture(_switchOnTexture);
+	}
+	else
+	{
+		_switch.setTexture(_switchOffTexture);
+	}
 	_switch.setOrigin(_switch.getLocalBounds().width / 2, _switch.getLocalBounds().height / 2);
 	_switch.setPosition(165.f, 850.f);
 }
