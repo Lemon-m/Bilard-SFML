@@ -444,11 +444,17 @@ void PlayState::update(float dt)
 				break;
 			}
 		}
+
+		if (balls.size() == 0)
+		{
+			ballsStationary = true;
+		}
 	}
 	else
 	{
 		ballsStationary = false;
 	}
+
 
 	if (ballsStationary == true && turn.get8BallScored() == true && win == 0)
 	{
